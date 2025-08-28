@@ -1,0 +1,161 @@
+@Library('tron-pipeline-library-comun@V3.0.53') libcommon
+@Library('tron-config-deploy-mx@feature/selenium-config') libconfig
+@Library('global-pipeline-library@release/v8')
+
+import lanzador.literals.ConstantsCore
+
+def GRID_READY = true
+def TESTS_DONE = false
+def parameterizedParams = '''
+  0 11 * * * %ENVIRONMENT=PRE;
+  0 7 * * * %ENVIRONMENT=PRO;
+'''
+
+pipeline {
+  agent none
+  parameters {
+    choice(name: 'ENVIRONMENT', choices: ['none', 'REC', 'DESA', 'IC', 'INT', 'PRE', 'PRO'], description: 'Target testing environment')
+    booleanParam(name: 'INSTALLATION_MAIL', defaultValue: false, description: 'End of installation mail')
+  }
+  options {
+    timestamps()
+    buildDiscarder logRotator(artifactDaysToKeepStr: '30', artifactNumToKeepStr: '', daysToKeepStr: '30', numToKeepStr: '')
+    // copyArtifactPermission '*'
+  }
+  environment {
+    CONFIG_FOLDER = ".config"
+    OPTION_YAML_PRO = "${CONFIG_FOLDER}/test_options.yaml"
+    OPTION_YAML_DEV = "${CONFIG_FOLDER}/test_options_dev.yaml"
+    BITBUCKET_WORKSPACE = getOwnerBitbucketJob("${JOB_NAME}")
+    REPO_DEPLOY_REGISTRY = "tron-core-deployment-registry"
+    ENVIRONMENT_PARAM = "${params.ENVIRONMENT}"
+    INSTALLATION_MAIL = "${params.INSTALLATION_MAIL}"
+  }
+
+  triggers {
+    parameterizedCron (env.BRANCH_NAME == 'master' ? parameterizedParams : '')
+  }
+
+  stages {
+    stage('Request environment for developers') {
+      when {
+        beforeInput true
+        branch 'feature/*'
+      }
+      options {
+        timeout(time: 30) 
+      }
+      input {
+        message "Enter the values"
+        parameters {
+            choice(name: 'ENVIRONMENT', choices: ['none', 'REC', 'DESA', 'IC', 'INT', 'PRE', 'PRO'], description: 'Target testing environment')
+        }
+      }
+      steps {
+        setEnvVariable("DEVELOPMENT_ENVIRONMENT", ENVIRONMENT)
+      }
+    }
+
+    stage('SELENIUM TESTS') {
+      when {
+        anyOf {
+          not {
+            environment name: 'ENVIRONMENT_PARAM', value: 'none'
+          }
+          expression {
+            return env.DEVELOPMENT_ENVIRONMENT && env.DEVELOPMENT_ENVIRONMENT != 'none'
+          }
+        }
+      }
+      parallel {
+        
+
+        stage('RUN PARALLEL TESTS') {
+          agent {
+            kubernetes {
+              yaml libraryResource(getYmlSlaveMX("selenium-maven"))
+            }
+          }
+
+          environment {
+            OPTION_YAML = getOptionYaml(BRANCH_NAME)
+            TEST_LIST = "${env.DEVELOPMENT_ENVIRONMENT ? selenium.prepareData(INSTALLATION_MAIL.toBoolean(), OPTION_YAML, env.DEVELOPMENT_ENVIRONMENT) : selenium.prepareData(INSTALLATION_MAIL.toBoolean(), OPTION_YAML, ENVIRONMENT_PARAM)}"
+            COUNT_PARALLEL = "${selenium.getParallelNum(OPTION_YAML)}"
+            SELENIUM_HUB = "${selenium.getHubUrl(OPTION_YAML)}"
+            COUNT_KILLED = "${selenium.getKilledNum(OPTION_YAML)}"
+            ENVIRONMENT_TO_TEST = "${env.DEVELOPMENT_ENVIRONMENT ? selenium.getEnvironmentToTest(env.DEVELOPMENT_ENVIRONMENT) : selenium.getEnvironmentToTest(ENVIRONMENT_PARAM)}"
+            MAIL_TO =  "${selenium.getNotificationMails(OPTION_YAML)}"
+          }
+
+          stages {
+            stage('Prepare testing') {
+              steps {
+                setConfigBuild('', "${env.DEVELOPMENT_ENVIRONMENT ? env.DEVELOPMENT_ENVIRONMENT : ENVIRONMENT_PARAM}")
+                echo "Pipeline parameter: ${env.DEVELOPMENT_ENVIRONMENT ? env.DEVELOPMENT_ENVIRONMENT : ENVIRONMENT_PARAM}"
+                echo "Environment: ${ENVIRONMENT}"
+                echo "Tests to execute:\n${TEST_LIST}"
+                echo "Selenium environment name: ${ENVIRONMENT_TO_TEST}"
+
+                echo "Precompile code"
+                container('maven') {
+                  sh "mvn -B package -DskipTests"
+                  sh 'mvn -B test-compile'
+                }
+              }
+            }
+
+            stage('Executing tests') {
+              steps {
+                container('maven'){
+                  echo "Wait for GRID"
+                  script {
+                    while ( GRID_READY.toBoolean() == false) {
+                      sleep(20)
+                    }
+                    echo "GRID READY"
+                  }
+                  echo "Executing tests"
+                  script {
+                    selenium.runParallel(COUNT_PARALLEL, TEST_LIST, ENVIRONMENT_TO_TEST, SELENIUM_HUB, "${env.DEVELOPMENT_ENVIRONMENT ? env.DEVELOPMENT_ENVIRONMENT : ENVIRONMENT_PARAM}", COUNT_KILLED)
+                  }
+                  echo "Tests executed"
+                }
+              }
+            }
+
+            stage('Send report') {
+              when {
+                environment name: 'INSTALLATION_MAIL', value: 'false'
+              }
+              steps {
+                echo "Enviar el email con los resultados"
+                emailext body: '${SCRIPT, template="groovy-html.template"}',
+                    subject: "Selenium MX :: Resultado de los test ${ENVIRONMENT_PARAM}",
+                    to: MAIL_TO
+              }
+            }
+          }
+          post {
+            always {
+              script {
+                TESTS_DONE = true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+def setEnvVariable(name, value) {
+  echo "Set environment variable: ${name} -> ${value}"
+  env."${name}" = "${value}"
+}
+
+def getOptionYaml(branch) {
+  if(branch == "master") {
+    return OPTION_YAML_PRO
+  }
+  return OPTION_YAML_DEV
+}

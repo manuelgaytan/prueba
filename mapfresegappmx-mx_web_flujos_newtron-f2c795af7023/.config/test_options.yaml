@@ -1,0 +1,338 @@
+environment:
+  REC:
+    - C44:
+        tests:
+          - CNU_3045
+          - ISI_2002
+          - ISI_2003
+          - ISI_2004
+          - ISI_2005
+          - ISI_2006
+          - ISI_3001
+          - ISI_3002
+          - ISI_3003
+          - ISI_3004
+          - ISI_3005
+          - ISI_3006
+          - ISI_3007
+          - ISI_3008
+          - ISI_3009
+          - ISI_3010
+          - ISI_3011
+          - ISI_3012
+          - ISI_3013
+          - ISI_3014
+          - ISI_3015
+          - LSI_3016
+          - LSI_3017
+          - LSI_3018
+          - LSI_3019
+          - LSI_3020
+          - LSI_3021
+          - LSI_3022
+          - LSI_3023
+          - LSI_3024
+          - LSI_3025
+          - LSI_3026
+          - LSI_3027
+          - LSI_3028
+          - LSI_3029
+          - LSI_3030
+          - LSI_3031
+          - LSI_3032
+          - LSI_3033
+          - LSI_3034
+          - LSI_3035
+          - LSI_3036
+          - LSI_3037
+          - LSI_3038
+          - THP_3039
+          - THP_3040
+          - THP_3041
+          - THP_3042
+          - THP_3043
+          - TSI_3044
+        browsers:
+          - chrome
+        resolutions:
+          - w: 1280
+            h: 720
+  DESA:
+    - C44:
+        tests:
+          - CNU_3045
+          - ISI_2002
+          - ISI_2003
+          - ISI_2004
+          - ISI_2005
+          - ISI_2006
+          - ISI_3001
+          - ISI_3002
+          - ISI_3003
+          - ISI_3004
+          - ISI_3005
+          - ISI_3006
+          - ISI_3007
+          - ISI_3008
+          - ISI_3009
+          - ISI_3010
+          - ISI_3011
+          - ISI_3012
+          - ISI_3013
+          - ISI_3014
+          - ISI_3015
+          - LSI_3016
+          - LSI_3017
+          - LSI_3018
+          - LSI_3019
+          - LSI_3020
+          - LSI_3021
+          - LSI_3022
+          - LSI_3023
+          - LSI_3024
+          - LSI_3025
+          - LSI_3026
+          - LSI_3027
+          - LSI_3028
+          - LSI_3029
+          - LSI_3030
+          - LSI_3031
+          - LSI_3032
+          - LSI_3033
+          - LSI_3034
+          - LSI_3035
+          - LSI_3036
+          - LSI_3037
+          - LSI_3038
+          - THP_3039
+          - THP_3040
+          - THP_3041
+          - THP_3042
+          - THP_3043
+          - TSI_3044
+        browsers:
+          - chrome
+        resolutions:
+          - w: 1280
+            h: 720
+  IC:
+    - C44:
+        tests:
+          - CNU_3045
+          - ISI_2002
+          - ISI_2003
+          - ISI_2004
+          - ISI_2005
+          - ISI_2006
+          - ISI_3001
+          - ISI_3002
+          - ISI_3003
+          - ISI_3004
+          - ISI_3005
+          - ISI_3006
+          - ISI_3007
+          - ISI_3008
+          - ISI_3009
+          - ISI_3010
+          - ISI_3011
+          - ISI_3012
+          - ISI_3013
+          - ISI_3014
+          - ISI_3015
+          - LSI_3016
+          - LSI_3017
+          - LSI_3018
+          - LSI_3019
+          - LSI_3020
+          - LSI_3021
+          - LSI_3022
+          - LSI_3023
+          - LSI_3024
+          - LSI_3025
+          - LSI_3026
+          - LSI_3027
+          - LSI_3028
+          - LSI_3029
+          - LSI_3030
+          - LSI_3031
+          - LSI_3032
+          - LSI_3033
+          - LSI_3034
+          - LSI_3035
+          - LSI_3036
+          - LSI_3037
+          - LSI_3038
+          - THP_3039
+          - THP_3040
+          - THP_3041
+          - THP_3042
+          - THP_3043
+          - TSI_3044
+        browsers:
+          - chrome
+        resolutions:
+          - w: 1280
+            h: 720
+  INT:
+    - C44:
+        tests:
+          - CNU_3045
+          - ISI_2002
+          - ISI_2003
+          - ISI_2004
+          - ISI_2005
+          - ISI_2006
+          - ISI_3001
+          - ISI_3002
+          - ISI_3003
+          - ISI_3004
+          - ISI_3005
+          - ISI_3006
+          - ISI_3007
+          - ISI_3008
+          - ISI_3009
+          - ISI_3010
+          - ISI_3011
+          - ISI_3012
+          - ISI_3013
+          - ISI_3014
+          - ISI_3015
+          - LSI_3016
+          - LSI_3017
+          - LSI_3018
+          - LSI_3019
+          - LSI_3020
+          - LSI_3021
+          - LSI_3022
+          - LSI_3023
+          - LSI_3024
+          - LSI_3025
+          - LSI_3026
+          - LSI_3027
+          - LSI_3028
+          - LSI_3029
+          - LSI_3030
+          - LSI_3031
+          - LSI_3032
+          - LSI_3033
+          - LSI_3034
+          - LSI_3035
+          - LSI_3036
+          - LSI_3037
+          - LSI_3038
+          - THP_3039
+          - THP_3040
+          - THP_3041
+          - THP_3042
+          - THP_3043
+          - TSI_3044
+        browsers:
+          - chrome
+        resolutions:
+          - w: 1280
+            h: 720
+  PRE:
+    - C44:
+        tests:
+          - CNU_3045
+          - ISI_2002
+          - ISI_2003
+          - ISI_2004
+          - ISI_2005
+          - ISI_2006
+          - ISI_3001
+          - ISI_3002
+          - ISI_3003
+          - ISI_3004
+          - ISI_3005
+          - ISI_3006
+          - ISI_3007
+          - ISI_3008
+          - ISI_3009
+          - ISI_3010
+          - ISI_3011
+          - ISI_3012
+          - ISI_3013
+          - ISI_3014
+          - ISI_3015
+          - LSI_3016
+          - LSI_3017
+          - LSI_3018
+          - LSI_3019
+          - LSI_3020
+          - LSI_3021
+          - LSI_3022
+          - LSI_3023
+          - LSI_3024
+          - LSI_3025
+          - LSI_3026
+          - LSI_3027
+          - LSI_3028
+          - LSI_3029
+          - LSI_3030
+          - LSI_3031
+          - LSI_3032
+          - LSI_3033
+          - LSI_3034
+          - LSI_3035
+          - LSI_3036
+          - LSI_3037
+          - LSI_3038
+          - THP_3039
+          - THP_3040
+          - THP_3041
+          - THP_3042
+          - THP_3043
+          - TSI_3044
+        browsers:
+          - chrome
+        resolutions:
+          - w: 1280
+            h: 720
+  PRO:
+    - C44:
+        tests:
+#          - THP_3039
+#          - THP_3040
+#          - THP_3041
+#          - ISI_3009
+#          - ISI_3010
+#          - ISI_3011
+#          - ISI_3012
+#          - LSI_3031
+#          - LSI_3032
+#          - LSI_3035
+#          - LSI_3037
+        browsers:
+          - chrome
+        resolutions:
+          - w: 1280
+            h: 720
+login:
+- C44:
+  tests:
+    - CNU_3045
+  browsers:
+    - chrome
+  resolutions:
+    - w: 1280
+      h: 720
+
+configuration:
+    hub_url: http://selenium-router.selenium:4444/wd/hub
+    parallel_num: 10
+    killed_num: 5
+    notification:
+      - "mapfre.devops.team.tron@accenture.com"
+      # - migmuno@mapfre.com  
+
+#Navegadores:
+# CHROME
+# FIREFOX
+# EDGE
+#Resoluciones:
+#800 x 600 píxeles
+#1280 x 720 píxeles
+#1366 x 768 píxeles
+#1680 x 1050 píxeles
+#1920 x 1080 píxeles
