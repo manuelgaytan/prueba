@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import static com.nttdata.ct.web.task.ExcelData.readExcel;
@@ -405,6 +406,8 @@ public class EmisionIndividualTask {
     @ShotBefore(evidenceName = "Ingresamos Credenciales UAT")
     @ShotAfter(evidenceName = "Inicio de sesión UAT hecho correctamente")
     public void ingresoCredencialesCotEmi() {
+        ArrayList<WebElement> elementos = (ArrayList<WebElement>) manager.getDriver().findElements(By.xpath("//input"));
+        System.out.println("Número de elementos: " + elementos.size());
         Util.pageStatus(manager.getDriver());
         String user = readExcel("dataWebAutomoviles", 2, 0);
         this.loginUI.inputUser.clear();

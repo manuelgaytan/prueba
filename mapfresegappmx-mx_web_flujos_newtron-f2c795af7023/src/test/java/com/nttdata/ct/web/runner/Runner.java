@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = {"com.nttdata.ct.web.hooks", "com.nttdata.ct.web.glue"},
 
-        tags = "@Colision_DMP,DED,DJA,LEO,LEO"
+        tags = "@Colision_DMP,DED,DJA,LEO,LEO,TEST"
 
 
 )

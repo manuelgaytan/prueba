@@ -14,7 +14,7 @@
       And Llenar Datos del siniestro "DMP,DED,DJA,LEO,LEO"
       And Llenar Datos Complementarios "DMP,DED,DJA,LEO,LEO"
 
-    @Expediente_Colision_DMP,DED,DJA,LEO,LEO  @Colision_DMP,DED,DJA,LEO,LEO
+    @Expediente_Colision_DMP,DED,DJA,LEO,LEO  @Colision_DMP,DED,DJA,LEO,LEO,TEST
     Scenario: Creacion de Expendientes  ColisionVolcadura DMP,DED,DJA,LEO,LEO
       Given Inicio la sesión con usuario y contrasena
       And Ir al Menu "Siniestros" Opcion "Apertura expediente"
